@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">solution2</string>
+    <string name="movie">Movie</string>
+    <string name="rating">Рейтинг:</string>
+    <string name="date">Дата выхода:</string>
+    <string name="popularMovies">Популярные новинки</string>
+</resources>
