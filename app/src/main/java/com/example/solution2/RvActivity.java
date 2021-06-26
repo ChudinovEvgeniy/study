@@ -28,17 +28,14 @@ public class RvActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvAdapter = new RvAdapter();
-        rvAdapter.setListener(new RvAdapter.OnClickListener() {
-            @Override
-            public void onClick(ApiResponse.ItemPopularMovies item) {
-                Toast.makeText(getApplicationContext(), item.title, Toast.LENGTH_SHORT).show();
-            }
-        });
+        rvAdapter.setListener(item -> Toast.makeText(getApplicationContext(), item.title, Toast.LENGTH_SHORT).show());
         getPopMovies();
     }
 
     public void getPopMovies() {
-        Call<ApiResponse> popularMovies = ApiClient.getMovies().getPopularMovies();
+        String API_KEY = "41f30fbbd3a76dee965d7e3be04c0f9d";
+
+        Call<ApiResponse> popularMovies = ApiClient.getMovies().getPopularMovies(API_KEY);
         popularMovies.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {

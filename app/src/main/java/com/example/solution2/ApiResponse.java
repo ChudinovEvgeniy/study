@@ -1,12 +1,12 @@
 package com.example.solution2;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ApiResponse {
     @SerializedName("results")
@@ -21,5 +21,23 @@ public class ApiResponse {
         public String rating;
         @SerializedName("release_date")
         public String date;
+    }
+
+    public static String reverseDate(String dateRelease) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd-MM-yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(dateRelease);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 }

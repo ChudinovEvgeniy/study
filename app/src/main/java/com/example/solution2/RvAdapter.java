@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvAdapterViewHolder> {
@@ -61,7 +64,8 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvAdapterViewHolde
                     .load(BASE_IMAGE_URL + popMovies.image)
                     .into(iv);
             if (popMovies.date != null){
-                ((TextView) itemView.findViewById(R.id.movieDateRelease)).setText(popMovies.date);
+                String revDate = ApiResponse.reverseDate(popMovies.date);
+                ((TextView) itemView.findViewById(R.id.movieDateRelease)).setText(revDate);
             }else
                 ((TextView) itemView.findViewById(R.id.movieDateRelease)).setText("нет данных");
             ((TextView) itemView.findViewById(R.id.namePopMovie)).setText(popMovies.title);
@@ -69,12 +73,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvAdapterViewHolde
                 ((TextView) itemView.findViewById(R.id.movieRating)).setText("нет данных");
             }else
             ((TextView) itemView.findViewById(R.id.movieRating)).setText(popMovies.rating);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnClickListener.onClick(popMovies);
-                }
-            });
+            itemView.setOnClickListener(v -> mOnClickListener.onClick(popMovies));
         }
     }
 }
