@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvAdapterViewHolder> {
@@ -63,18 +60,17 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.RvAdapterViewHolde
             Picasso.get()
                     .load(BASE_IMAGE_URL + popMovies.image)
                     .into(iv);
-            if (popMovies.date != null){
+            if (popMovies.date != null) {
                 String revDate = ApiResponse.reverseDate(popMovies.date);
                 ((TextView) itemView.findViewById(R.id.movieDateRelease)).setText(revDate);
-            }else
+            } else
                 ((TextView) itemView.findViewById(R.id.movieDateRelease)).setText("нет данных");
             ((TextView) itemView.findViewById(R.id.namePopMovie)).setText(popMovies.title);
-            if (popMovies.rating.startsWith("0")){
+            if (popMovies.rating.startsWith("0")) {
                 ((TextView) itemView.findViewById(R.id.movieRating)).setText("нет данных");
-            }else
-            ((TextView) itemView.findViewById(R.id.movieRating)).setText(popMovies.rating);
+            } else
+                ((TextView) itemView.findViewById(R.id.movieRating)).setText(popMovies.rating);
             itemView.setOnClickListener(v -> mOnClickListener.onClick(popMovies));
         }
     }
 }
-

@@ -29,12 +29,14 @@ public class ApiResponse {
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
 
-        Date date = null;
+        Date date;
         String str = null;
 
         try {
             date = inputFormat.parse(dateRelease);
-            str = outputFormat.format(date);
+            if (date != null) {
+                str = outputFormat.format(date);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
