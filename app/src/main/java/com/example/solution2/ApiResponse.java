@@ -1,5 +1,7 @@
 package com.example.solution2;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
@@ -21,11 +23,23 @@ public class ApiResponse {
         public String rating;
         @SerializedName("release_date")
         public String date;
+
+        @NonNull
+        @Override
+        public String toString() {
+            return "UserResponse{" +
+                    ", title='" + title + '\'' +
+                    ", poster_path='" + image + '\'' +
+                    ", vote_average='" + rating + '\'' +
+                    ", release_date='" + date + '\'' +
+                    '}';
+        }
     }
 
     public static String reverseDate(String dateRelease) {
         String inputPattern = "yyyy-MM-dd";
         String outputPattern = "dd-MM-yyyy";
+
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.US);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.US);
 

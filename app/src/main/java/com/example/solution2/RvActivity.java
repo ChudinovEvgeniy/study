@@ -47,7 +47,7 @@ public class RvActivity extends AppCompatActivity {
                     rvAdapter.setData(popMoviesResponse);
                     recyclerView.setAdapter(rvAdapter);
                     if (response.body() != null) {
-                        Log.e("success", response.body().toString());
+                        Log.e("success", response.body().results.toString());
                     }
                 }
             }
