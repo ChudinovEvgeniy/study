@@ -13,6 +13,7 @@ public class ApiClient {
         return new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .callbackExecutor(Runnable::run)
                 .client(okHttpClient)
                 .build();
     }

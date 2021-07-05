@@ -23,6 +23,8 @@ public class ApiResponse {
         public String rating;
         @SerializedName("release_date")
         public String date;
+        @SerializedName("overview")
+        public String overview;
 
         @NonNull
         @Override
@@ -32,6 +34,7 @@ public class ApiResponse {
                     ", poster_path='" + image + '\'' +
                     ", vote_average='" + rating + '\'' +
                     ", release_date='" + date + '\'' +
+                    ", overview='" + overview + '\'' +
                     '}';
         }
     }
