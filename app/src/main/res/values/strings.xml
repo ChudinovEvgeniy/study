@@ -3,5 +3,15 @@
     <string name="movie">Movie</string>
     <string name="rating">Рейтинг:</string>
     <string name="date">Дата выхода:</string>
-    <string name="popularMovies">Популярные новинки</string>
+    <string name="popularMovies">Популярные фильмы</string>
+    <string name="now_playing">Сейчас в кино</string>
+    <string name="upcoming_movies">Скоро выйдут</string>
+    <string name="enter_movie_name">Ведите название фильма</string>
+    <string name="overviewText">Текст</string>
+    <string name="overview">Описание</string>
+    <string name="dateRelease">Дата выхода</string>
+    <string name="detailRating">Рейтинг</string>
+    <string name="find_movie">Поиск фильма</string>
+    <string name="upcoming">Скоро выйдут</string>
+    <string name="popular">Популярные</string>
 </resources>

@@ -1,9 +1,9 @@
 package com.example.solution2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RvActivity extends AppCompatActivity {
-    private static final String TAG = RvActivity.class.getSimpleName();
+public class PopularActivity extends AppCompatActivity {
+    private static final String TAG = PopularActivity.class.getSimpleName();
 
     private AppDatabase mMoviesDb;
 
@@ -36,31 +36,32 @@ public class RvActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_popular);
         recyclerView = findViewById(R.id.rvList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvAdapter = new RvAdapter();
         recyclerView.setAdapter(rvAdapter);
-        rvAdapter.setListener(item -> Toast.makeText(getApplicationContext(), item.overview, Toast.LENGTH_SHORT).show());
+        rvAdapter.setListener(item -> {
+            Intent intent = new Intent(PopularActivity.this, DetailActivity.class);
+            intent.putExtra((DetailActivity.EXTRA_NUMBER), item.id);
+            startActivity(intent);
+        });
         getPopMovies();
     }
 
     public void getPopMovies() {
-        String API_KEY = "41f30fbbd3a76dee965d7e3be04c0f9d";
-        String TYPE = "popular";
-
-        Call<ApiResponse> popularMovies = ApiClient.getMovies().getPopularMovies(TYPE, API_KEY);
+        Call<ApiResponse> popularMovies = ApiClient.getRetrofit().getPopularMovies();
         popularMovies.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
-                List<ApiResponse.ItemPopularMovies> popMoviesResponse;
+                List<ApiResponse.ItemMovies> popMoviesResponse;
                 if (response.isSuccessful() && response.body() != null) {
                     mMoviesDb.moviesDao().clear();
                     Log.e(TAG, response.body().results.toString());
                     popMoviesResponse = response.body().results;
                     ArrayList<MoviesItemEntity> entities = new ArrayList<>();
-                    for (ApiResponse.ItemPopularMovies item : popMoviesResponse) {
+                    for (ApiResponse.ItemMovies item : popMoviesResponse) {
                         MoviesItemEntity entity = new MoviesItemEntity();
                         entity.title = item.title;
                         entity.rating = item.rating;
@@ -74,7 +75,7 @@ public class RvActivity extends AppCompatActivity {
                     popMoviesResponse = new ArrayList<>();
                     Log.d(TAG, "failure");
                     for (MoviesItemEntity entity : mMoviesDb.moviesDao().getAll()) {
-                        ApiResponse.ItemPopularMovies item = new ApiResponse.ItemPopularMovies();
+                        ApiResponse.ItemMovies item = new ApiResponse.ItemMovies();
                         item.title = entity.title;
                         item.rating = entity.rating;
                         item.date = entity.date;
@@ -89,9 +90,9 @@ public class RvActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, t.getLocalizedMessage());
-                List<ApiResponse.ItemPopularMovies> popMoviesResponse = new ArrayList<>();
+                List<ApiResponse.ItemMovies> popMoviesResponse = new ArrayList<>();
                 for (MoviesItemEntity entity : mMoviesDb.moviesDao().getAll()) {
-                    ApiResponse.ItemPopularMovies item = new ApiResponse.ItemPopularMovies();
+                    ApiResponse.ItemMovies item = new ApiResponse.ItemMovies();
                     item.title = entity.title;
                     item.rating = entity.rating;
                     item.date = entity.date;

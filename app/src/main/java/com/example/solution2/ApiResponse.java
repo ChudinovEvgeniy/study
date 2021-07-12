@@ -12,9 +12,11 @@ import java.util.Locale;
 
 public class ApiResponse {
     @SerializedName("results")
-    public List<ItemPopularMovies> results;
+    public List<ItemMovies> results;
+    @SerializedName("total_pages")
+    public int total_pages;
 
-    static class ItemPopularMovies {
+    static class ItemMovies {
         @SerializedName("title")
         public String title;
         @SerializedName("poster_path")
@@ -25,6 +27,8 @@ public class ApiResponse {
         public String date;
         @SerializedName("overview")
         public String overview;
+        @SerializedName("id")
+        public String id;
 
         @NonNull
         @Override
@@ -35,6 +39,7 @@ public class ApiResponse {
                     ", vote_average='" + rating + '\'' +
                     ", release_date='" + date + '\'' +
                     ", overview='" + overview + '\'' +
+                    ", id='" + id + '\'' +
                     '}';
         }
     }
